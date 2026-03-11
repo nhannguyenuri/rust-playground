@@ -1,6 +1,6 @@
-mod utils;
-mod routes;
 mod config;
+mod routes;
+mod utils;
 
 use axum::{
     Json, Router,
@@ -29,7 +29,8 @@ async fn main() {
     let app = Router::new()
         // `GET /` goes to `root`
         .route("/", get(root))
-        // `POST /users` goes to `create_user`
+        // `GET /api/vi/ping` goes to `ping`
+        .route("/api/v1/ping", get(routes::v1::ping::get_ping))      // `POST /users` goes to `create_user`
         .route("/users", post(create_user));
 
     // run our app with hyper
@@ -55,10 +56,7 @@ async fn root(req: Request) -> impl IntoResponse {
     let uri = req.uri().clone();
     let status = StatusCode::OK;
 
-    utils::logger::info(&format!(
-        "[{}] [{}] [{}] [{}]",
-        host, method, uri, status
-    ));
+    utils::logger::info(&format!("[{}] [{}] [{}] [{}]", host, method, uri, status));
 
     (status, "Hello, World!")
 }
