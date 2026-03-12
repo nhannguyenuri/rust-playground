@@ -1,6 +1,6 @@
-use crate::utils;
 use axum::{Json, extract::Request, http::StatusCode, response::IntoResponse};
 use serde::Serialize;
+use tracing::info;
 
 #[derive(Serialize)]
 struct PingResponse {
@@ -23,7 +23,7 @@ pub async fn get_ping(req: Request) -> impl IntoResponse {
         data: "pong".to_string(),
     };
 
-    utils::logger::info(&format!("[{}] [{}] [{}] [{}]", host, method, uri, status));
+    info!("[{}] [{}] [{}] [{}]", host, method, uri, status);
 
     (StatusCode::OK, Json(ping_response))
 }

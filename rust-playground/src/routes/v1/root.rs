@@ -1,5 +1,5 @@
-use crate::utils;
 use axum::{extract::Request, http::StatusCode, response::IntoResponse};
+use tracing::info;
 
 pub async fn get_root(req: Request) -> impl IntoResponse {
     let host = req
@@ -11,7 +11,7 @@ pub async fn get_root(req: Request) -> impl IntoResponse {
     let uri = req.uri().clone();
     let status = StatusCode::OK;
 
-    utils::logger::info(&format!("[{}] [{}] [{}] [{}]", host, method, uri, status));
+    info!("[{}] [{}] [{}] [{}]", host, method, uri, status);
 
     (status, "Hello, World!")
 }
