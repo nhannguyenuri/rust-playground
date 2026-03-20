@@ -38,7 +38,6 @@ async fn main() {
 
     tracing_subscriber::fmt::init();
 
-
     let app = Router::new()
         .route("/", get(routes::v1::root::get_root))
         .route("/api/v1/ping", get(routes::v1::ping::get_ping))
